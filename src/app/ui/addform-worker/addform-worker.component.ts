@@ -9,10 +9,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class AddformWorkerComponent implements OnInit {
 
-  // name: string;
-  // surname: string;
-  // type = 0;
-
   workerForm: FormGroup
 
   myWorkerType = MyWorkerType;
@@ -32,10 +28,6 @@ export class AddformWorkerComponent implements OnInit {
   }
 
   onAddWorker(worker){
-    console.log(worker.telephone)
-    console.log(worker)
-
-    worker.telephone =  worker.telephone
     this.addWorker.emit(worker)
     this.workerForm.reset()
   }

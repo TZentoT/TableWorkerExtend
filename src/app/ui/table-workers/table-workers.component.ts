@@ -59,7 +59,6 @@ export class TableWorkersComponent implements OnInit {
   ApplyChanges(id: number){
     this.isClicked = false;
 
-    // this.changeWorker.emit({id: id, name: this.name, surname: this.surname, telephone: this.telephone })
     let worker =  this.changeWorkerForm.value
 
     this.changeWorker.emit({id: id, name: worker.name, surname: worker.surname, telephone: worker.telephone })
