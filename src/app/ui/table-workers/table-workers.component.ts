@@ -40,7 +40,7 @@ export class TableWorkersComponent implements OnInit {
 
   onDeleteWorker( id : number){
     this.deleteWorker.emit(id)
-    this.selectedWorker = undefined;
+    if (id == this.selectedWorker) this.selectedWorker = undefined;
   }
 
   onChangeWorker( id: number){
