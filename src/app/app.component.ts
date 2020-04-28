@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MyWorker, MyWorkerDatabase, MyWorkerType } from './shared/worker.model';
 
 
@@ -7,11 +7,77 @@ import { MyWorker, MyWorkerDatabase, MyWorkerType } from './shared/worker.model'
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Список сотрудников';
 
   workers: MyWorker[] = MyWorkerDatabase;
   myWorkersType = MyWorkerType;
+
+  hideProgrammers: boolean = false;
+  hideDesigners: boolean = false;
+  hideCopywriters: boolean = false;
+  hideManagers: boolean = false;
+
+  dropdownList = [];
+  selectedItems = [];
+  dropdownSettings = {};
+
+  ngOnInit(): void {
+    this.dropdownList = [
+      { "id": this.myWorkersType.programmer, "itemName": "Программист" },
+      { "id": this.myWorkersType.designer, "itemName": "Дизайнер" },
+      { "id": this.myWorkersType.copywriter, "itemName": "Рекламщик" },
+      { "id": this.myWorkersType.manager, "itemName": "Менеджер" }
+  ];
+
+  this.selectedItems = [
+      { "id": this.myWorkersType.programmer, "itemName": "Программист" },
+      { "id": this.myWorkersType.designer, "itemName": "Дизайнер" },
+      { "id": this.myWorkersType.copywriter, "itemName": "Рекламщик" },
+      { "id": this.myWorkersType.manager, "itemName": "Менеджер" }];
+
+    this.dropdownSettings = { 
+      singleSelection: false, 
+      text:"Выберите сферу",
+      selectAllText:'Выбрать все',
+      unSelectAllText:'Скрыть все',
+      // enableSearchFilter: true,
+      // classes:"myclass custom-class"
+    };         
+  }
+
+  onItemSelect(item:any){
+    console.log(item);
+    console.log(this.selectedItems);
+    if (item.id == 0) this.hideProgrammers = false;
+    if (item.id == 1) this.hideDesigners = false;
+    if (item.id == 2) this.hideCopywriters = false;
+    if (item.id == 3) this.hideManagers = false;
+  }
+  OnItemDeSelect(item:any){
+      console.log(item);
+      console.log(this.selectedItems);
+
+      if (item.id == 0) this.hideProgrammers = true;
+      if (item.id == 1) this.hideDesigners = true;
+      if (item.id == 2) this.hideCopywriters = true;
+      if (item.id == 3) this.hideManagers = true;
+
+  }
+  onSelectAll(items: any){
+      console.log(items);
+      this.hideProgrammers = false;
+      this.hideDesigners = false;
+      this.hideCopywriters = false;
+      this.hideManagers = false;
+  }
+  onDeSelectAll(items: any){
+      console.log(items);
+      this.hideProgrammers = true;
+      this.hideDesigners = true;
+      this.hideCopywriters = true;
+      this.hideManagers = true;
+  }
 
   getByType(type: number){
     return this.workers.filter(worker => worker.type === type)
@@ -33,8 +99,9 @@ export class AppComponent {
    onChangeWorker(worker){
     for( let item of this.workers){
       if (item.id === worker.id) {
-        if (worker.name != undefined && worker.name != "") item.name = worker.name;
-        if (worker.surname != undefined && worker.surname != "") item.surname = worker.surname;
+         item.name = worker.name;
+         item.surname = worker.surname;
+         item.telephone = worker.telephone;
       }
     }
    }

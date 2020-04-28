@@ -1,11 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
 
 import { AppComponent } from './app.component';
 import { TableWorkersComponent } from './ui/table-workers/table-workers.component';
 import { AddformWorkerComponent } from './ui/addform-worker/addform-worker.component';
 
+
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 @NgModule({
   declarations: [
@@ -15,8 +19,11 @@ import { AddformWorkerComponent } from './ui/addform-worker/addform-worker.compo
     
   ],
   imports: [
+    AngularMultiSelectModule,
     BrowserModule,
-    FormsModule
+    FormsModule,
+    NgxMaskModule.forRoot(),
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

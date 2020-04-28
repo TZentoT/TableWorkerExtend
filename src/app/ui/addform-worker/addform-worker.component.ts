@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MyWorkerType, MyWorker } from 'src/app/shared/worker.model';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-addform-worker',
@@ -8,9 +9,11 @@ import { MyWorkerType, MyWorker } from 'src/app/shared/worker.model';
 })
 export class AddformWorkerComponent implements OnInit {
 
-  name: string;
-  surname: string;
-  type = 0;
+  // name: string;
+  // surname: string;
+  // type = 0;
+
+  workerForm: FormGroup
 
   myWorkerType = MyWorkerType;
 
@@ -19,18 +22,21 @@ export class AddformWorkerComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+    this.workerForm = new FormGroup ({ 
+      name: new FormControl({ value: '', disabled: false}, [Validators.required]),
+      surname: new FormControl({ value:"", disabled: false}, [Validators.required]),
+      type: new FormControl({ value: 0, disabled: false}, [Validators.required]),
+      telephone: new FormControl({ value: "", disabled: false}, [Validators.required])
+    })
   }
 
-  onAddWorker(){
-    let worker: MyWorker = {
-      name: this.name,
-      surname: this.surname,
-      type: this.type,
-    }
-    if (this.name != undefined && this.surname != undefined && this.name != "" && this.surname != "" ){
-      this.addWorker.emit(worker)
-    } else{
-      alert("Заполните пустые поля")
-    }
+  onAddWorker(worker){
+    console.log(worker.telephone)
+    console.log(worker)
+
+    worker.telephone =  worker.telephone
+    this.addWorker.emit(worker)
+    this.workerForm.reset()
   }
 }
